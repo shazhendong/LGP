@@ -2,42 +2,28 @@
 # 
 # 
 
-class add:
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        self.oprand3[0] = self.oprand1[0] + self.oprand2[0]
+def add(r, a1, a2):
+    #return string specifying r = a1 + a2
+    eq = ' = '
+    op = ' + '
+    return r + eq + a1 + op + a2
 
-class subtract:
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        self.oprand3[0] =  self.oprand1[0] - self.oprand2[0]
+def sub(r, a1, a2):
+    #return string specifying r = a1 - a2
+    eq = ' = '
+    op = ' - '
+    return r + eq + a1 + op + a2
 
-class multiplication:
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        self.oprand3[0] =  self.oprand1[0] * self.oprand2[0]
 
-class protectedDivition:
-    # protected division, return 0 if divided by 0
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        if self.oprand2[0] == 0:
-            self.oprand3[0] =  0
-        else:
-            self.oprand3[0] =  self.oprand1[0] / self.oprand2[0]
+def mul(r, a1, a2):
+    #return string specifying r = a1 * a2
+    eq = ' = '
+    op = ' * '
+    return r + eq + a1 + op + a2
+
+def div_protected(r, a1, a2):
+    #return string specifying r = a1 / a2, if a2 = 0 then r = 0
+    eq = ' = '
+    op = ' / '
+    protectCondition = ' if ' + a2 + ' != 0 else 0'
+    return r + eq + a1 + op + a2 + protectCondition

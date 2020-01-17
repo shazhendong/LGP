@@ -2,29 +2,20 @@
 # 
 # 
 
-class AND:
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        self.oprand3[0] =  self.oprand1[0] and self.oprand2[0]
+def AND(r, a1, a2):
+    #return string specifying r = a1 and a2
+    eq = ' = '
+    op = ' and '
+    return r + eq + a1 + op + a2
 
-class OR:
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        self.oprand3[0] =  self.oprand1[0] or self.oprand2[0]
+def OR(r, a1, a2):
+    #return string specifying r = a1 or a2
+    eq = ' = '
+    op = ' or '
+    return r + eq + a1 + op + a2
 
-class XOR:
-    def __init__(self, o1, o2, o3):
-        self.oprand1 = o1
-        self.oprand2 = o2
-        self.oprand3 = o3
-    
-    def equals(self):
-        self.oprand3[0] =  self.oprand1[0] ^ self.oprand2[0]
+def NOT(r, a1):
+    #return string specifying r = not a1
+    eq = ' = '
+    op = 'or '
+    return r + eq + op + a1
