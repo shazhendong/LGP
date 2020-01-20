@@ -9,7 +9,7 @@ class individual:
             the name of output registers (arr_registers_output), 
             the name of arithmatic registers (arr_registers_arithmatic),
             the name of feature values (arr_registers_var),
-            and the aviliable operators (arr_operators in {'add','sub','mul','div','and','or','not'}).
+            and the aviliable operators (arr_operators in {'add','sub','mul','div','and','or','not','if'}).
         '''
         self.arr_registers_output = arr_registers_output
         self.arr_registers_arithmatic = arr_registers_arithmatic
@@ -22,9 +22,11 @@ class individual:
         '''
         self.target_registers = self.arr_registers_output + self.arr_registers_arithmatic
         self.oprand_registers = self.arr_registers_output + self.arr_registers_arithmatic + self.arr_registers_var
-        for x in range(len):
-            print(self.generate_one_operation())
-
+        #program = ['#Program start\n']
+        #for x in range(len):
+        #    program = program + [self.generate_one_operation()]
+        program = [self.generate_one_operation() for x in range(len)]
+        return program
 
     def generate_one_operation(self):
         op = random.choice(self.arr_operators)
@@ -62,6 +64,18 @@ class individual:
             target = random.choice(self.target_registers)
             oprand1 = random.choice(self.oprand_registers)
             return LogicOperations.NOT(target,oprand1)
+        if op == 'if':
+            oprand1 = random.choice(self.oprand_registers)
+            oprand2 = random.choice(self.oprand_registers)
+            cond_op = random.choice(['>=','==','<='])
+            condition = ''
+            if cond_op == '>=':
+                condition = LogicOperations.GEQ_If(oprand1, oprand2)
+            if cond_op == '==':
+                condition = LogicOperations.EQ_If(oprand1, oprand2)
+            if cond_op == '<=':
+                condition = LogicOperations.SEQ_If(oprand1, oprand2)
+            return LogicOperations.IF(condition)
 
     def toString(self):
         print(self.arr_registers_output)
@@ -69,4 +83,34 @@ class individual:
         print(self.arr_registers_var)
         return 'ok'
 
-    
+def compile_program(arr_program):
+    # this function compile the array of program to byte code
+    # preprocessing
+    arr = arr_program.copy()
+    arr = Fix_Program_lastLineAsIF(arr)
+    arr = indentation(arr)
+    print(arr)
+    codeInString = ''.join([str(elem) for elem in arr])
+    print(codeInString)
+    return compile(codeInString, 'gpindividual', 'exec')
+
+def indentation(arr):
+    # this function make sure if statement works. it add indentation befor the first line after if statement
+    # this function assume the if operation skip one line only
+    level = 0
+    for i in range(len(arr)):
+        if arr[i].split(' ')[0] == 'if':
+            level = level+1
+            arr[i] = arr[i] + '\t'*level
+            continue
+        level = 0
+    return arr
+
+def Fix_Program_lastLineAsIF(arr):
+    # this function fix issues of if statements apperaing at the end of the program.
+    for i in range(len(arr)-1,-1,-1):
+        if arr[i].split(' ')[0] == 'if':
+            arr[i] = '# ' + arr[i]
+            continue
+        break
+    return arr
