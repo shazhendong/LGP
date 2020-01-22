@@ -1,4 +1,4 @@
-# Recombination shall cover:
+# Recombination:
 # 1. linear crossover 
 # 2. One-Point crossover 
 # 3. One segment cross over
