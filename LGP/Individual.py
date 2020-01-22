@@ -94,6 +94,15 @@ def compile_program(arr_program):
     print(codeInString)
     return compile(codeInString, 'gpindividual', 'exec')
 
+def printProgram(arr_program):
+    # this function compile the array of program to byte code
+    # preprocessing
+    arr = arr_program.copy()
+    arr = Fix_Program_lastLineAsIF(arr)
+    arr = indentation(arr)
+    codeInString = ''.join([str(elem) for elem in arr])
+    return codeInString
+
 def indentation(arr):
     # this function make sure if statement works. it add indentation befor the first line after if statement
     # this function assume the if operation skip one line only
