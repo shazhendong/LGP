@@ -89,9 +89,9 @@ def compile_program(arr_program):
     arr = arr_program.copy()
     arr = Fix_Program_lastLineAsIF(arr)
     arr = indentation(arr)
-    print(arr)
+    #print(arr)
     codeInString = ''.join([str(elem) for elem in arr])
-    print(codeInString)
+    #print(codeInString)
     return compile(codeInString, 'gpindividual', 'exec')
 
 def printProgram(arr_program):
