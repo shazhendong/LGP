@@ -25,8 +25,6 @@ def linear_crossover(indi1,indi2):
     crossOverPoint_2_2 = random.randint(0,len(indi2)-1)
     if(crossOverPoint_2_1 > crossOverPoint_2_2):
         crossOverPoint_2_2, crossOverPoint_2_1 = crossOverPoint_2_1, crossOverPoint_2_2
-    print(crossOverPoint_1_1,crossOverPoint_1_2)
-    print(crossOverPoint_2_1,crossOverPoint_2_2)
     indi1_seg1 = indi1[:crossOverPoint_1_1]
     indi1_seg2 = indi1[crossOverPoint_1_1:crossOverPoint_1_2]
     indi1_seg3 = indi1[crossOverPoint_1_2:]
