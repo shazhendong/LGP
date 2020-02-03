@@ -4,8 +4,9 @@ import Recombinations
 import random
 import Mutations
 import Evaluation
+import Statistics
 
-def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, Reg_feat, operations, TournamentSize, fitnessType, numOfGenerations, Prob_cross, Prob_mutation, dtf, dtl, dvf, dvl):
+def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, Reg_feat, operations, TournamentSize, fitnessType, numOfGenerations, Prob_cross, Prob_mutation, dtf, dtl, dvf, dvl, resultDisplay):
     '''
     This algorithm implements the pseudo code outlined in "Linear genetic programming" Algorithm 2.1
     Parameters:
@@ -24,10 +25,18 @@ def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, R
         dtl: label values
         dvf: feature values for validation set
         dvl: label values for validation set
+        resultDisplay: select metrics to display
     '''
     # set up population
     ct = individual(Reg_output,Reg_arit,Reg_feat,operations) # creaters
     pop = [ct.generate_program(InitialProgramLength) for i in range(PopulationSize)]
+    acc_train = [Evaluation.fitness_acc(ct,p,dtf,dtl) for p in pop]
+    acc_test = [Evaluation.fitness_acc(ct,p,dvf,dvl) for p in pop]
+
+    Statistics.display_header(resultDisplay, preFix='train_')
+    Statistics.display_header(resultDisplay, preFix='test_')
+    print('\n',end='')
+
 
     for i in range(numOfGenerations):
         # perform two tournament
@@ -54,9 +63,15 @@ def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, R
 
         # replace tournament losser
         pop[tour1_worest] = winner1_copy
+        acc_train[tour1_worest] = Evaluation.fitness_acc(ct,pop[tour1_worest],dtf,dtl)
+        acc_test[tour1_worest] = Evaluation.fitness_acc(ct,pop[tour1_worest],dvf,dvl)
         pop[tour2_worest] = winner2_copy
+        acc_train[tour2_worest] = Evaluation.fitness_acc(ct,pop[tour2_worest],dtf,dtl)
+        acc_test[tour2_worest] = Evaluation.fitness_acc(ct,pop[tour2_worest],dvf,dvl)
 
-        print("Generation " + str(i))
+        Statistics.display_metrics(resultDisplay, acc_train, i)
+        Statistics.display_metrics(resultDisplay, acc_test)
+        print('\n',end='')
 
     
 

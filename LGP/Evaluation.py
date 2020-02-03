@@ -49,6 +49,14 @@ def run(arr_r_o, arr_r_a, arr_r_f, code, arr_feature):
     return [dic[v] for v in arr_r_o]
         
 def fitness_acc(creator, program, data, label):
+    '''
+    This function returns accuracy for a given program over the data
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the array of programs
+        data: is a set of data entries
+        label: actual label
+    '''
     m_res = execution(creator, program, data)
     arr_prediction = [a.index(max(a)) for a in m_res]
     return len([i for i, j in zip(arr_prediction, list(label)) if i == j])/len(label)
