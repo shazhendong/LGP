@@ -17,10 +17,10 @@ def main():
     ips = 20 # initial population length
     op = ['add','sub','mul'] # avaliable operations
     ts = 10 # tournament size
-    ft = 'ce' # fitness type
+    ft = 'cep' # fitness type
     pc = 0.5 #crossover probability
     pm = 0.5 #mutation probability
-    ng = 1000 #number of generation
+    ng = 10000 #number of generation
     dm = ['max','ave','min']
 
 

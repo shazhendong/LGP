@@ -34,7 +34,7 @@ def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, R
     acc_test = [Evaluation.fitness_acc(ct,p,dvf,dvl) for p in pop]
 
     Statistics.display_header(resultDisplay, preFix='train_')
-    Statistics.display_header(resultDisplay, preFix='test_')
+    Statistics.display_header(resultDisplay, preFix='test_', printGeneration=False)
     print('\n',end='')
 
 
