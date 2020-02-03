@@ -13,11 +13,11 @@ def main():
     numberOfFolds = 10
     numberOfOutputRegisters = 2
     ArithmeticRegisterRatio  = 0.5
-    ps = 500 # population size
+    ps = 100 # population size
     ips = 20 # initial population length
     op = ['add','sub','mul'] # avaliable operations
-    ts = 100 # tournament size
-    ft = 'acc' # fitness type
+    ts = 10 # tournament size
+    ft = 'ce' # fitness type
     pc = 0.5 #crossover probability
     pm = 0.5 #mutation probability
     ng = 1000 #number of generation
