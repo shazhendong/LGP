@@ -73,5 +73,7 @@ def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, R
         Statistics.display_metrics(resultDisplay, acc_test)
         print('\n',end='')
 
+    return pop[acc_train.index(max(acc_train))]
+
     
 

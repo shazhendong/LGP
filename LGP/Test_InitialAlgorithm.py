@@ -13,14 +13,14 @@ def main():
     numberOfFolds = 10
     numberOfOutputRegisters = 2
     ArithmeticRegisterRatio  = 0.5
-    ps = 100 # population size
+    ps = 1000 # population size
     ips = 20 # initial population length
-    op = ['add','sub','mul'] # avaliable operations
-    ts = 10 # tournament size
-    ft = 'cep' # fitness type
+    op = ['add','sub','mul','div','if'] # avaliable operations
+    ts = 1000 # tournament size
+    ft = 'acc' # fitness type
     pc = 0.5 #crossover probability
-    pm = 0.5 #mutation probability
-    ng = 10000 #number of generation
+    pm = 0.2 #mutation probability
+    ng = 6000 #number of generation
     dm = ['max','ave','min']
 
 
@@ -46,7 +46,9 @@ def main():
     r_ari = ['R_A_' + str(i) for i in range(int(len(r_fea)*ArithmeticRegisterRatio))]
 
     # ---- call algorithm ----
-    Algorithms.AlgTwoPointOne(PopulationSize=ps, InitialProgramLength=ips, Reg_output=r_out, Reg_arit=r_ari, Reg_feat=r_fea, operations=op, TournamentSize=ts, fitnessType=ft, numOfGenerations=ng, Prob_cross=pc, Prob_mutation=pm, dtf=data_feature_train, dtl=data_label_train, dvf=data_feature_test, dvl=data_label_test, resultDisplay=dm)
+    opt_program = Algorithms.AlgTwoPointOne(PopulationSize=ps, InitialProgramLength=ips, Reg_output=r_out, Reg_arit=r_ari, Reg_feat=r_fea, operations=op, TournamentSize=ts, fitnessType=ft, numOfGenerations=ng, Prob_cross=pc, Prob_mutation=pm, dtf=data_feature_train, dtl=data_label_train, dvf=data_feature_test, dvl=data_label_test, resultDisplay=dm)
+    print(id.printProgram(opt_program))
+
 
 if __name__ == '__main__':
     main()
