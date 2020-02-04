@@ -30,8 +30,8 @@ def AlgTwoPointOne(PopulationSize, InitialProgramLength, Reg_output, Reg_arit, R
     # set up population
     ct = individual(Reg_output,Reg_arit,Reg_feat,operations) # creaters
     pop = [ct.generate_program(InitialProgramLength) for i in range(PopulationSize)]
-    acc_train = [Evaluation.fitness_acc(ct,p,dtf,dtl) for p in pop]
-    acc_test = [Evaluation.fitness_acc(ct,p,dvf,dvl) for p in pop]
+    acc_train = Evaluation.fitness_para('acc',ct,pop,dtf,dtl)
+    acc_test = Evaluation.fitness_para('acc',ct,pop,dvf,dvl)
 
     Statistics.display_header(resultDisplay, preFix='train_')
     Statistics.display_header(resultDisplay, preFix='test_', printGeneration=False)

@@ -1,7 +1,7 @@
 # This file implement evaluations.
 import Individual as id
 import numpy as np
-
+from multiprocessing import Pool
 
 def execution(creator, program, data):
     '''
@@ -26,7 +26,7 @@ def fitness(type, creator, program, data, label):
     Parameteres:
         type: type of fitness
         creater: contain the unvisal rules govering all programs
-        program: is the array of programs
+        program: is a program
         data: is a set of data entries
         label: actual label
     '''
@@ -37,6 +37,28 @@ def fitness(type, creator, program, data, label):
     if type == 'cep':
         return fitness_cep(creator, program, data, label)
     print ('type not supported!')
+
+def fitness_para(type, creator, programs, data, label):
+    '''
+    This function returns fitness for individual.
+    Parameteres:
+        type: type of fitness
+        creater: contain the unvisal rules govering all programs
+        programs: is an array of programs
+        data: is a set of data entries
+        label: actual label
+    '''
+    inputParameter = [[type,creator,p,data,label] for p in programs]
+    try:
+        pool = Pool(processes=16)
+        result = pool.map(fitness_mid,inputParameter)
+    finally:
+        pool.close()
+        pool.join()
+    return result
+
+def fitness_mid(a):
+    return fitness(a[0],a[1],a[2],a[3],a[4])
 
 
 
