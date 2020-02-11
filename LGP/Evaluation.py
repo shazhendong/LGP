@@ -2,6 +2,8 @@
 import Individual as id
 import numpy as np
 from multiprocessing import Pool
+import pandas as pd
+from sklearn.metrics import confusion_matrix
 
 def execution(creator, program, data):
     '''
@@ -36,6 +38,16 @@ def fitness(type, creator, program, data, label):
         return fitness_ce(creator, program, data, label)
     if type == 'cep':
         return fitness_cep(creator, program, data, label)
+    if type == 'acc_b':
+        return Eval_Accuracy(creator, program, data, label)
+    if type == 'precision_b':
+        return Eval_Precision(creator, program, data, label)
+    if type == 'recall_b':
+        return Eval_Recall(creator, program, data, label)
+    if type == 'specificity_b':
+        return Eval_Specificity(creator, program, data, label)
+    if type == 'f1_b':
+        return Eval_F1Score(creator, program, data, label)
     print ('type not supported!')
 
 def fitness_para(type, creator, programs, data, label):
@@ -117,6 +129,80 @@ def fitness_cep(creator, program, data, label):
     arr_target = targetToOnHotArr(label)
     return -cross_entropy_plus(arr_prediction, arr_target)
 
+def Eval_Accuracy(creator, program, data, label):
+    '''
+    This function returns Accuracy as the evaluation metric for a program
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    m_res = execution(creator, program, data)
+    arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
+    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
+    return (tp+tn)/(tn+fp+fn+tp)
+
+def Eval_Precision(creator, program, data, label):
+    '''
+    This function returns Precision as the evaluation metric for a program
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    m_res = execution(creator, program, data)
+    arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
+    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
+    return tp/(fp+tp)
+
+def Eval_Recall(creator, program, data, label):
+    '''
+    This function returns Recall/Sensitivity/True Positive Rate as the evaluation metric for a program
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    m_res = execution(creator, program, data)
+    arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
+    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
+    return (tp)/(fn+tp)
+
+def Eval_Specificity(creator, program, data, label):
+    '''
+    This function returns Specificity as the evaluation metric for a program
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    m_res = execution(creator, program, data)
+    arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
+    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
+    return (tn)/(tn+fp)
+
+def Eval_F1Score(creator, program, data, label):
+    '''
+    This function returns F1 score as the evaluation metric for a program
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    m_res = execution(creator, program, data)
+    arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
+    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
+    precision = tp/(fp+tp)
+    recall = tp/(fn+tp)
+    return (2*precision*recall)/(precision+recall)
+
+
+
 # ---- utilities ----
 
 def cross_entropy(predictions, targets, epsilon=1e-12):
@@ -168,3 +254,25 @@ def select_distribution(prediction, target):
         return target
     else: 
         return prediction
+
+def translateToPrediction(m_res, type):
+    '''
+    This function translate an array of register outputs to an array of predictions.
+    Parameters:
+        m_res: an array of register outputs;
+        type: mode of making prediction
+    '''
+    if type == 'MTA':
+        # Prediction equals the index of register with the larget value
+        return [a.index(max(a)) for a in m_res]
+
+def confusionMatrix_binary(y_pred, y_true):
+    '''
+    This function returns the four elemets (true negative, false positive, false negative, true positive) of the confusion matrix. Note that for now it only support binary classification
+    Parameter:
+        y_pred: the array of predictions;
+        y_true: the array of actual labels.
+    '''
+    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+    return tn, fp, fn, tp
+
