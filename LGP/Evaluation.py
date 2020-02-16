@@ -4,6 +4,7 @@ import numpy as np
 from multiprocessing import Pool
 import pandas as pd
 from sklearn.metrics import confusion_matrix
+import random
 
 def execution(creator, program, data):
     '''
@@ -48,6 +49,8 @@ def fitness(type, creator, program, data, label):
         return Eval_Specificity(creator, program, data, label)
     if type == 'f1_b':
         return Eval_F1Score(creator, program, data, label)
+    if type == 'size':
+        return Eval_ProgramSize(creator, program, data, label)
     print ('type not supported!')
 
 def fitness_para(type, creator, programs, data, label):
@@ -202,6 +205,17 @@ def Eval_F1Score(creator, program, data, label):
     return (2*precision*recall)/(precision+recall)
 
 
+def Eval_ProgramSize(creator, program, data, label):
+    '''
+    This function returns program size as the evaluation metric for a program
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    return len(program)
+
 
 # ---- utilities ----
 
@@ -275,4 +289,3 @@ def confusionMatrix_binary(y_pred, y_true):
     '''
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
     return tn, fp, fn, tp
-
