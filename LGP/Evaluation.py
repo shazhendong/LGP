@@ -204,6 +204,20 @@ def Eval_F1Score(creator, program, data, label):
     recall = tp/(fn+tp)
     return (2*precision*recall)/(precision+recall)
 
+def Return_confusionMatrix_binary(creator, program, data, label):
+    '''
+    This function returns confution matrix
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    m_res = execution(creator, program, data)
+    arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
+    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
+    return [tn, fp, fn, tp]
+
 
 def Eval_ProgramSize(creator, program, data, label):
     '''

@@ -20,12 +20,12 @@ def main():
     ips = 10 # initial population length
     op = ['add','sub','mul','div','if'] # avaliable operations
     ts = 100 # tournament size
-    ft = 'specificity_b' # fitness type
+    ft = 'acc_b' # fitness type
     pc = 0.8 #crossover probability
     pm = 0.4 #mutation probability
-    ng = 16000 #number of generation
-    fd = ['precision_b','recall_b','specificity_b','f1_b','ce','acc_b','size']#fitness display
-    nr = 100 #number of runs
+    ng = 8000 #number of generation
+    fd = ['tn', 'fp', 'fn', 'tp']#fitness display
+    nr = 1000 #number of runs
 
 
     # ---- Process ----
@@ -51,7 +51,7 @@ def main():
     r_ari = ['R_A_' + str(i) for i in range(int(len(r_fea)*ArithmeticRegisterRatio))]
 
     # ---- call algorithm ----
-    m_p = [[i,ps,ips,r_out,r_ari,r_fea,op,ts,ft,ng,pc,pm,data_feature_train,data_label_train,data_feature_test,data_label_test,fd] for i in range(nr)]
+    m_p = [[i,ps,ips,r_out,r_ari,r_fea,op,ts,ft,ng,pc,pm,data_feature_train,data_label_train,data_feature_test,data_label_test] for i in range(nr)]
     outputString = ""
     outputString += "ID,"
     outputString += 'Gen,'
@@ -61,6 +61,7 @@ def main():
     outputString += 'Max_TestingAcc,'
     outputString += ','.join(fd)
     outputString += ',\n'
+    
     print(outputString, end ="")
     try:
         pool = Pool(processes=14)
@@ -69,9 +70,8 @@ def main():
         pool.close()
         pool.join()
 
-    #Algorithms.FitnessCorrelation(RunID = i, PopulationSize=ps, InitialProgramLength=ips, Reg_output=r_out, Reg_arit=r_ari, Reg_feat=r_fea, operations=op, TournamentSize=ts, fitnessType=ft, numOfGenerations=ng, Prob_cross=pc, Prob_mutation=pm, dtf=data_feature_train, dtl=data_label_train, dvf=data_feature_test, dvl=data_label_test, fitnessDisplay=fd)
         
 def mid(arr):
-    Algorithms.FitnessCorrelation(RunID = arr[0], PopulationSize=arr[1], InitialProgramLength=arr[2], Reg_output=arr[3], Reg_arit=arr[4], Reg_feat=arr[5], operations=arr[6], TournamentSize=arr[7], fitnessType=arr[8], numOfGenerations=arr[9], Prob_cross=arr[10], Prob_mutation=arr[11], dtf=arr[12], dtl=arr[13], dvf=arr[14], dvl=arr[15], fitnessDisplay=arr[16])
+    Algorithms.FitnessCorrelation_confusionMatrix(RunID = arr[0], PopulationSize=arr[1], InitialProgramLength=arr[2], Reg_output=arr[3], Reg_arit=arr[4], Reg_feat=arr[5], operations=arr[6], TournamentSize=arr[7], fitnessType=arr[8], numOfGenerations=arr[9], Prob_cross=arr[10], Prob_mutation=arr[11], dtf=arr[12], dtl=arr[13], dvf=arr[14], dvl=arr[15])
 if __name__ == '__main__':
     main()
