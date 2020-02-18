@@ -4,3 +4,5 @@ LGP/Test_CrossEntropy.py
 data/test.csv
 *.pyc
 
+LGP/.DS_Store
+.DS_Store
