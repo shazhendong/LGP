@@ -17,22 +17,27 @@ def main():
     numberOfOutputRegisters = 2
     ArithmeticRegisterRatio  = 0.5
     ps = 1000 # population size
-    ips = 10 # initial population length
+    ips = 20 # initial population length
     op = ['add','sub','mul','div','if'] # avaliable operations
     ts = 100 # tournament size
-    ft = 'specificity_b' # fitness type
-    pc = 0.8 #crossover probability
-    pm = 0.4 #mutation probability
-    ng = 16000 #number of generation
+    ft = 'acc_b' # fitness type
+    pc = 0.9 #crossover probability
+    pm = 0.9 #mutation probability
+    ng = 8000 #number of generation
     fd = ['precision_b','recall_b','specificity_b','f1_b','ce','acc_b','size']#fitness display
-    nr = 100 #number of runs
+    nr = 1000 #number of runs
 
 
     # ---- Process ----
 
-    df = pd.read_csv('breast-cancer-wisconsin.tsv',sep='\t')
-    data_feature = df.iloc[:,1:]
-    data_label = df.iloc[:,0]
+    df = pd.read_csv('tokyo1.tsv',sep='\t')
+    # label as the first column
+    #data_feature = df.iloc[:,1:]
+    #data_label = df.iloc[:,0]
+
+    # label as the last column
+    data_feature = df.iloc[:,0:len(df.columns)-1]
+    data_label = df.iloc[:,len(df.columns)-1]
 
     # ---- split train ----
     

@@ -142,7 +142,7 @@ def FitnessCorrelation(RunID, PopulationSize, InitialProgramLength, Reg_output, 
         pop[tour2_worest] = winner2_copy
         arr_fitness[tour2_worest] = winner2_copy_fitness
 
-        if i % 200 != 0:
+        if i % 500 != 0:
             continue
         t = [RunID]
         t.append(i)
