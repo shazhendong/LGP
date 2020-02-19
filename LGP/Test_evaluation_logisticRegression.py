@@ -21,7 +21,7 @@ r_ari = ['R_A_' + str(i) for i in range(int(len(r_fea)*ArithmeticRegisterRatio))
 
 ct = individual(r_out, r_ari, r_fea,['add','sub','mul','if'],constantLimit=10)
 pg = ct.generate_program(20)
-print(Evaluation.Eval_LogisticRegression_b(creator=ct, program=pg, data=data_feature, label=data_lable))
+print(Evaluation.Eval_Accuracy(creator=ct, program=pg, data=data_feature, label=data_lable))
 print(id.printProgram(pg))
 
 

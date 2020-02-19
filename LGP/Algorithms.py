@@ -98,7 +98,7 @@ def FitnessCorrelation(RunID, PopulationSize, InitialProgramLength, Reg_output, 
         fitnessDisplay: select fitness to display
     '''
     # set up population
-    ct = individual(Reg_output,Reg_arit,Reg_feat,operations) # creaters
+    ct = individual(Reg_output,Reg_arit,Reg_feat,operations,constantLimit=32) # creaters
     pop = [ct.generate_program(InitialProgramLength) for i in range(PopulationSize)]
     arr_fitness = [Evaluation.fitness(type=fitnessType, creator=ct, program=p, data=dtf, label=dtl) for p in pop]
     #arr_fitness = Evaluation.fitness_para(fitnessType,ct,pop,dtf, dtl)

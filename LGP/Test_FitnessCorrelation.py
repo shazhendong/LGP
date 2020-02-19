@@ -23,21 +23,21 @@ def main():
     ft = 'acc_b' # fitness type
     pc = 0.9 #crossover probability
     pm = 0.9 #mutation probability
-    ng = 8000 #number of generation
-    fd = ['precision_b','recall_b','specificity_b','f1_b','ce','acc_b','size']#fitness display
-    nr = 1000 #number of runs
+    ng = 2000 #number of generation
+    fd = ['precision_b','recall_b','f1_b','ce','acc_b','size']#fitness display
+    nr = 50 #number of runs
 
 
     # ---- Process ----
 
-    df = pd.read_csv('tokyo1.tsv',sep='\t')
+    df = pd.read_csv('breast-cancer-wisconsin.tsv',sep='\t')
     # label as the first column
-    #data_feature = df.iloc[:,1:]
-    #data_label = df.iloc[:,0]
+    data_feature = df.iloc[:,1:]
+    data_label = df.iloc[:,0]
 
     # label as the last column
-    data_feature = df.iloc[:,0:len(df.columns)-1]
-    data_label = df.iloc[:,len(df.columns)-1]
+    #data_feature = df.iloc[:,0:len(df.columns)-1]
+    #data_label = df.iloc[:,len(df.columns)-1]
 
     # ---- split train ----
     
