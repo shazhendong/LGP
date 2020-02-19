@@ -3,17 +3,20 @@ import LogicOperations
 import random
 
 class individual:
-    def __init__(self, arr_registers_output, arr_registers_arithmatic, arr_registers_var, arr_operators):
+    def __init__(self, arr_registers_output, arr_registers_arithmatic, arr_registers_var, arr_operators, constantLimit = 0):
         '''
         This function initialize the basic compoents for an LGP individual, including:
             the name of output registers (arr_registers_output), 
             the name of arithmatic registers (arr_registers_arithmatic),
             the name of feature values (arr_registers_var),
-            and the aviliable operators (arr_operators in {'add','sub','mul','div','and','or','not','if'}).
+            the aviliable operators (arr_operators in {'add','sub','mul','div','and','or','not','if'}).
+            and the constantLimit set the range of constants to be add to the program
         '''
         self.arr_registers_output = arr_registers_output
         self.arr_registers_arithmatic = arr_registers_arithmatic
         self.arr_registers_var = arr_registers_var
+        for i in range(constantLimit):
+            self.arr_registers_var.append(str(i))
         self.arr_operators = arr_operators
 
     def generate_program(self, len):
