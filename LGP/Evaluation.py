@@ -7,6 +7,7 @@ from sklearn.metrics import confusion_matrix
 import random
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import log_loss
+import Metrics
 
 def execution(creator, program, data):
     '''
@@ -53,6 +54,8 @@ def fitness(type, creator, program, data, label):
         return Eval_F1Score(creator, program, data, label)
     if type == 'size':
         return Eval_ProgramSize(creator, program, data, label)
+    if type == 'lrl_b':
+        return Eval_LogisticRegression_b(creator, program, data, label)
     print ('type not supported!')
 
 def fitness_para(type, creator, programs, data, label):
@@ -145,8 +148,7 @@ def Eval_Accuracy(creator, program, data, label):
     '''
     m_res = execution(creator, program, data)
     arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
-    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
-    return (tp+tn)/(tn+fp+fn+tp)
+    return Metrics.accuracy(label, arr_prediction)
 
 def Eval_Precision(creator, program, data, label):
     '''
@@ -159,8 +161,7 @@ def Eval_Precision(creator, program, data, label):
     '''
     m_res = execution(creator, program, data)
     arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
-    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
-    return tp/(fp+tp)
+    return Metrics.precision(label, arr_prediction)
 
 def Eval_Recall(creator, program, data, label):
     '''
@@ -173,8 +174,7 @@ def Eval_Recall(creator, program, data, label):
     '''
     m_res = execution(creator, program, data)
     arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
-    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
-    return (tp)/(fn+tp)
+    return Metrics.recall(label, arr_prediction)
 
 def Eval_Specificity(creator, program, data, label):
     '''
@@ -201,10 +201,7 @@ def Eval_F1Score(creator, program, data, label):
     '''
     m_res = execution(creator, program, data)
     arr_prediction = translateToPrediction(m_res=m_res, type='MTA')
-    tn, fp, fn, tp = confusionMatrix_binary(arr_prediction, label)
-    precision = tp/(fp+tp)
-    recall = tp/(fn+tp)
-    return (2*precision*recall)/(precision+recall)
+    return Metrics.f1Score(label, arr_prediction)
 
 def Return_confusionMatrix_binary(creator, program, data, label):
     '''

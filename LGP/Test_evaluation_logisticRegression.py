@@ -6,7 +6,7 @@ import Evaluation
 # ---- Parameters ----
 
 numberOfOutputRegisters = 1
-ArithmeticRegisterRatio  = 0.5
+ArithmeticRegisterRatio  = 0.1
 
 # ---- Process ----
 
