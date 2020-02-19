@@ -95,7 +95,7 @@ def compile_program(arr_program):
     return compile(codeInString, 'gpindividual', 'exec')
 
 def printProgram(arr_program):
-    # this function compile the array of program to byte code
+    # this function print a program
     # preprocessing
     arr = arr_program.copy()
     arr = Fix_Program_lastLineAsIF(arr)
