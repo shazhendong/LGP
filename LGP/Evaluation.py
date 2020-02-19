@@ -5,6 +5,8 @@ from multiprocessing import Pool
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 import random
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import log_loss
 
 def execution(creator, program, data):
     '''
@@ -229,6 +231,26 @@ def Eval_ProgramSize(creator, program, data, label):
         label: actual label
     '''
     return len(program)
+
+
+def Eval_LogisticRegression_b(creator, program, data, label):
+    '''
+    This function use logistic regression as the predictor which will make prediction base upon the value of output register.
+    Parameteres:
+        creater: contain the unvisal rules govering all programs
+        program: is the program
+        data: is a set of data entries
+        label: actual label
+    '''
+    x = execution(creator, program, data)
+    y = label
+    logr = LogisticRegression(solver='lbfgs')
+    logr.fit(x,y)
+    y_pred = logr.predict_proba(x)[:, 1].ravel()
+    loss = log_loss(y, y_pred)
+    return -loss
+
+
 
 
 # ---- utilities ----

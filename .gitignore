@@ -6,3 +6,5 @@ data/test.csv
 
 LGP/.DS_Store
 .DS_Store
+.DS_Store
+*.pyc
